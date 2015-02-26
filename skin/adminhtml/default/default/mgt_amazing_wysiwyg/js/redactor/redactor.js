@@ -147,7 +147,7 @@ var Redactor = function(element, options)
 
     buttonsCustom: {},
     buttonsAdd: [],
-    buttons: ['html', '|', 'bold', 'italic', 'deleted'],
+    buttons: ['html', '|', 'bold', 'italic'],
 /*
     buttons: ['html', '|', 'formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
         'image', 'video', 'file', 'table', 'link', '|',
