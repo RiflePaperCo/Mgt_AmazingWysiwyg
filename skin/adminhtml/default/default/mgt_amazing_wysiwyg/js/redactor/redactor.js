@@ -147,8 +147,12 @@ var Redactor = function(element, options)
 
     buttonsCustom: {},
     buttonsAdd: [],
-    buttons: ['html', '|', 'formatting', '|', 'bold', 'italic', 'deleted'],
-
+    buttons: ['html', '|', 'bold', 'italic', 'deleted'],
+/*
+    buttons: ['html', '|', 'formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+        'image', 'video', 'file', 'table', 'link', '|',
+        'fontcolor', 'backcolor', '|', 'alignleft', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule'],
+*/
     airButtons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'outdent', 'indent', '|', 'fontcolor', 'backcolor'],
 
     colors: [
@@ -160,8 +164,8 @@ var Redactor = function(element, options)
       '#7f7f7f', '#0c0c0c', '#1d1b10', '#0f243e', '#244061', '#632423', '#4f6128', '#3f3151', '#31859b', '#974806', '#7f6000'],
 
     // private
-    allEmptyHtml: '<p><br /></p>',
-    mozillaEmptyHtml: '<p>&nbsp;</p>',
+    allEmptyHtml: '',
+    mozillaEmptyHtml: '&nbsp;',
     buffer: false,
     visual: true,
 
