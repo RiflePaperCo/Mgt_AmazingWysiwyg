@@ -43,9 +43,9 @@ var RLANG = {
   delete_row: 'Delete Row',
   delete_table: 'Delete Table',
   rows: 'Rows',
-  columns: 'Columns',  
+  columns: 'Columns',
   add_head: 'Add Head',
-  delete_head: 'Delete Head',  
+  delete_head: 'Delete Head',
   title: 'Title',
   image_position: 'Position',
   none: 'None',
@@ -56,13 +56,13 @@ var RLANG = {
   mailto: 'Email',
   web: 'URL',
   video_html_code: 'Video Embed Code',
-  file: 'Insert File...',  
+  file: 'Insert File...',
   upload: 'Upload',
   download: 'Download',
   choose: 'Choose',
   or_choose: 'Or choose',
   drop_file_here: 'Drop file here',
-  align_left:  'Align Left',  
+  align_left:  'Align Left',
   align_center: 'Align Center',
   align_right: 'Align Right',
   align_justify: 'Justify',
@@ -75,12 +75,12 @@ var RLANG = {
 // Plugin
 jQuery.fn.redactor = function(option)
 {
-  return this.each(function() 
+  return this.each(function()
   {
     var $mgtobj = $mgt(this);
-    
+
     var data = $mgtobj.data('redactor');
-    if (!data) 
+    if (!data)
     {
       $mgtobj.data('redactor', (data = new Redactor(this, option)));
     }
@@ -93,12 +93,12 @@ var Redactor = function(element, options)
 {
   // Element
   this.$mgtel = $mgt(element);
-  
+
   // Lang
-  if (typeof options !== 'undefined' && typeof options.lang !== 'undefined' && options.lang !== 'en' && typeof RELANG[options.lang] !== 'undefined') 
+  if (typeof options !== 'undefined' && typeof options.lang !== 'undefined' && options.lang !== 'en' && typeof RELANG[options.lang] !== 'undefined')
   {
     RLANG = RELANG[options.lang];
-  }    
+  }
 
   // Options
   this.opts = $mgt.extend({
@@ -110,7 +110,7 @@ var Redactor = function(element, options)
     keyupCallback: false, // function
     keydownCallback: false, // function
     execCommandCallback: false, // function
-  
+
     focus: false,
     autoresize: true,
     fixed: false,
@@ -126,10 +126,10 @@ var Redactor = function(element, options)
     interval: 60, // seconds
 
     imageGetJson: false, // url (ex. /folder/images.json ) or false
-    
+
     imageUpload: false, // url
     imageUploadCallback: false, // function
-    
+
     fileUpload: false, // url
     fileUploadCallback: false, // function
 
@@ -138,18 +138,16 @@ var Redactor = function(element, options)
 
     observeImages: true,
     overlay: true, // modal overlay
-    
-    allowedTags: ["code", "span", "div", "label", "a", "br", "p", "b", "i", "del", "strike", 
-        "img", "video", "audio", "iframe", "object", "embed", "param", "blockquote", 
-        "mark", "cite", "small", "ul", "ol", "li", "hr", "dl", "dt", "dd", "sup", "sub", 
-        "big", "pre", "code", "figure", "figcaption", "strong", "em", "table", "tr", "td", 
+
+    allowedTags: ["code", "span", "div", "label", "a", "br", "p", "b", "i", "del", "strike",
+        "img", "video", "audio", "iframe", "object", "embed", "param", "blockquote",
+        "mark", "cite", "small", "ul", "ol", "li", "hr", "dl", "dt", "dd", "sup", "sub",
+        "big", "pre", "code", "figure", "figcaption", "strong", "em", "table", "tr", "td",
         "th", "tbody", "thead", "tfoot", "h1", "h2", "h3", "h4", "h5", "h6"],
-    
+
     buttonsCustom: {},
     buttonsAdd: [],
-    buttons: ['html', '|', 'formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-        'image', 'video', 'file', 'table', 'link', '|',
-        'fontcolor', 'backcolor', '|', 'alignleft', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule'],
+    buttons: ['html', '|', 'formatting', '|', 'bold', 'italic', 'deleted'],
 
     airButtons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'outdent', 'indent', '|', 'fontcolor', 'backcolor'],
 
@@ -166,9 +164,9 @@ var Redactor = function(element, options)
     mozillaEmptyHtml: '<p>&nbsp;</p>',
     buffer: false,
     visual: true,
-          
+
     // modal windows container
-    modal_file: String() + 
+    modal_file: String() +
       '<form id="redactorUploadFileForm" method="post" action="" enctype="multipart/form-data">' +
         '<label>Name (optional)</label>' +
         '<input type="text" id="redactor_filename" class="redactor_input" />' +
@@ -177,7 +175,7 @@ var Redactor = function(element, options)
         '</div>' +
       '</form>',
 
-    modal_image_edit: String() + 
+    modal_image_edit: String() +
       '<label>' + RLANG.title + '</label>' +
       '<input id="redactor_file_alt" class="redactor_input" />' +
       '<label>' + RLANG.link + '</label>' +
@@ -196,7 +194,7 @@ var Redactor = function(element, options)
         '</span>' +
       '</div>',
 
-    modal_image: String() + 
+    modal_image: String() +
       '<div id="redactor_tabs">' +
         '<a href="javascript:void(null);" class="redactor_tabs_act">' + RLANG.upload + '</a>' +
         '<a href="javascript:void(null);">' + RLANG.choose + '</a>' +
@@ -221,7 +219,7 @@ var Redactor = function(element, options)
         '</span>' +
       '</div>',
 
-    modal_link: String() + 
+    modal_link: String() +
       '<form id="redactorInsertLinkForm" method="post" action="">' +
         '<div id="redactor_tabs">' +
           '<a href="javascript:void(null);" class="redactor_tabs_act">URL</a>' +
@@ -232,7 +230,7 @@ var Redactor = function(element, options)
         '<div class="redactor_tab" id="redactor_tab1">' +
           '<label>URL</label><input id="redactor_link_url" class="redactor_input"  />' +
           '<label>' + RLANG.text + '</label><input class="redactor_input redactor_link_text" id="redactor_link_url_text" />' +
-          '<label><input type="checkbox" id="redactor_link_blank"> ' + RLANG.link_new_tab + 
+          '<label><input type="checkbox" id="redactor_link_blank"> ' + RLANG.link_new_tab +
         '</div>' +
         '<div class="redactor_tab" id="redactor_tab2" style="display: none;">' +
           '<label>Email</label><input id="redactor_link_mailto" class="redactor_input" />' +
@@ -249,8 +247,8 @@ var Redactor = function(element, options)
           '<a href="javascript:void(null);" id="redactor_btn_modal_close">' + RLANG.cancel + '</a>' +
         '</span>' +
       '</div>',
-    
-    modal_table: String() + 
+
+    modal_table: String() +
         '<label>' + RLANG.rows + '</label>' +
         '<input size="5" value="2" id="redactor_table_rows" />' +
         '<label>' + RLANG.columns + '</label>' +
@@ -261,8 +259,8 @@ var Redactor = function(element, options)
             '<a href="javascript:void(null);" id="redactor_btn_modal_close">' + RLANG.cancel + '</a>' +
           '</span>' +
         '</div>',
-    
-    modal_video: String() + 
+
+    modal_video: String() +
       '<form id="redactorInsertVideoForm">' +
         '<label>' + RLANG.video_html_code + '</label>' +
         '<textarea id="redactor_insert_video_area" style="width: 99%; height: 160px;"></textarea>' +
@@ -285,7 +283,7 @@ var Redactor = function(element, options)
       {
         title: RLANG.formatting,
         func: 'show',
-        dropdown: 
+        dropdown:
         {
           p:
           {
@@ -295,7 +293,7 @@ var Redactor = function(element, options)
           blockquote:
           {
             title: RLANG.quote,
-            exec: 'formatblock',  
+            exec: 'formatblock',
             className: 'redactor_format_blockquote'
           },
           pre:
@@ -331,10 +329,10 @@ var Redactor = function(element, options)
         }
       },
       bold:
-      { 
+      {
         title: RLANG.bold,
-        exec: 'bold'  
-      }, 
+        exec: 'bold'
+      },
       italic:
       {
         title: RLANG.italic,
@@ -344,7 +342,7 @@ var Redactor = function(element, options)
       {
         title: RLANG.deleted,
         exec: 'strikethrough'
-      },  
+      },
       unorderedlist:
       {
         title: '&bull; ' + RLANG.unorderedlist,
@@ -358,7 +356,7 @@ var Redactor = function(element, options)
       outdent:
       {
         title: '< ' + RLANG.outdent,
-        exec: 'outdent'  
+        exec: 'outdent'
       },
       indent:
       {
@@ -379,14 +377,14 @@ var Redactor = function(element, options)
       {
         title: RLANG.file,
         func: 'showFile'
-      },  
+      },
       table:
-      { 
+      {
         title: RLANG.table,
         func: 'show',
         dropdown:
         {
-          insert_table:  
+          insert_table:
           {
             title: RLANG.insert_table,
             func: 'showTable'
@@ -451,7 +449,7 @@ var Redactor = function(element, options)
         }
       },
       link:
-      { 
+      {
         title: RLANG.link,
         func: 'show',
         dropdown:
@@ -461,7 +459,7 @@ var Redactor = function(element, options)
             title: RLANG.link_insert,
             func: 'showLink'
           },
-          unlink: 
+          unlink:
           {
             title: RLANG.unlink,
             exec: 'unlink'
@@ -472,39 +470,39 @@ var Redactor = function(element, options)
       {
         title: RLANG.fontcolor,
         func: 'show'
-      },  
+      },
       backcolor:
       {
         title: RLANG.backcolor,
-        func: 'show'  
+        func: 'show'
       },
       alignleft:
-      {  
+      {
         exec: 'JustifyLeft',
         title: RLANG.align_left
-      },          
+      },
       aligncenter:
       {
         exec: 'JustifyCenter',
         title: RLANG.align_center
       },
-      alignright: 
+      alignright:
       {
         exec: 'JustifyRight',
         title: RLANG.align_right
-      },  
-      justify: 
+      },
+      justify:
       {
         exec: 'justifyfull',
         title: RLANG.align_justify
-      },  
-      horizontalrule: 
+      },
+      horizontalrule:
       {
         exec: 'inserthorizontalrule',
         title: RLANG.horizontalrule
-      }  
+      }
     }
-    
+
 
   }, options, this.$mgtel.data());
 
@@ -520,19 +518,19 @@ Redactor.prototype = {
 
   // Initialization
   init: function()
-  {  
+  {
 
     // get dimensions
     this.height = this.$mgtel.css('height');
-    this.width = this.$mgtel.css('width');    
-  
+    this.width = this.$mgtel.css('width');
+
     // mobile
     if (this.opts.mobile === false && this.isMobile())
     {
       this.build(true);
       return false;
-    }      
-  
+    }
+
     // extend buttons
     if (this.opts.air)
     {
@@ -542,37 +540,37 @@ Redactor.prototype = {
     {
       if (this.opts.source === false)
       {
-        var index = this.opts.buttons.indexOf('html');  
-        var next = this.opts.buttons[index+1];        
+        var index = this.opts.buttons.indexOf('html');
+        var next = this.opts.buttons[index+1];
         this.opts.buttons.splice(index, 1);
         if (typeof next !== 'undefined' && next === '|')
         {
           this.opts.buttons.splice(index, 1);
         }
-      }        
-    
-      $mgt.extend(this.opts.toolbar, this.opts.buttonsCustom);      
+      }
+
+      $mgt.extend(this.opts.toolbar, this.opts.buttonsCustom);
       $mgt.each(this.opts.buttonsAdd, $mgt.proxy(function(i,s)
       {
         this.opts.buttons.push(s);
-        
+
       }, this));
     }
 
     // construct editor
     this.build();
-    
+
     // air enable
-    this.enableAir();    
-    
+    this.enableAir();
+
     // toolbar
-    this.buildToolbar();        
+    this.buildToolbar();
 
     // paste
     if (this.isMobile(true) === false)
     {
       this.$mgteditor.bind('paste', $mgt.proxy(function(e)
-      { 
+      {
         this.setBuffer();
 
         if (this.opts.autoresize === true)
@@ -583,46 +581,46 @@ Redactor.prototype = {
         {
           this.saveScroll = this.$mgteditor.scrollTop();
         }
-  
+
         var frag = this.extractContent();
-        
+
         setTimeout($mgt.proxy(function()
-        {        
+        {
           var pastedFrag = this.extractContent();
-          this.$mgteditor.append(frag);        
+          this.$mgteditor.append(frag);
           this.restoreSelection();
-          
+
           var html = this.getFragmentHtml(pastedFrag);
           this.pasteCleanUp(html);
-        
+
         }, this), 1);
-  
-      }, this));  
+
+      }, this));
     }
 
     // key handlers
-    this.keyup();  
-    this.keydown();      
+    this.keyup();
+    this.keydown();
 
     // autosave
     if (this.opts.autosave !== false)
     {
       this.autoSave();
-    }      
+    }
 
     // observers
     this.observeImages();
-    this.observeTables();  
-    
+    this.observeTables();
+
     // FF fix
     if ($mgt.browser.mozilla)
     {
       document.execCommand('enableObjectResizing', false, false);
-      document.execCommand('enableInlineTableEditing', false, false);      
+      document.execCommand('enableInlineTableEditing', false, false);
     }
-      
+
     // focus
-    if (this.opts.focus) 
+    if (this.opts.focus)
     {
       this.$mgteditor.focus();
     }
@@ -633,32 +631,32 @@ Redactor.prototype = {
       this.observeScroll();
       $mgt(document).scroll($mgt.proxy(this.observeScroll, this));
     }
-    
+
     // callback
     if (typeof this.opts.callback === 'function')
     {
       this.opts.callback(this);
     }
-    
+
   },
   shortcuts: function(e, cmd)
   {
     e.preventDefault();
-    
+
     this.execCommand(cmd, false);
-  },    
+  },
   keyup: function()
   {
     this.$mgteditor.keyup($mgt.proxy(function(e)
     {
       var key = e.keyCode || e.which;
-      
+
       // callback as you type
       if (typeof this.opts.keyupCallback === 'function')
       {
         this.opts.keyupCallback(this, e);
       }
-      
+
       // if empty
       if (key === 8 || key === 46)
       {
@@ -671,10 +669,10 @@ Redactor.prototype = {
       {
         return this.formatNewLine(e);
       }
-      
+
       this.syncCode();
 
-    }, this));    
+    }, this));
   },
   keydown: function()
   {
@@ -684,18 +682,18 @@ Redactor.prototype = {
       var parent = this.getParentNode();
       var pre = false;
       var ctrl = e.ctrlKey || e.metaKey;
-      
+
       if (parent && $mgt(parent).get(0).tagName === 'PRE')
       {
         pre = true;
       }
 
       // callback keydown
-      if (typeof this.opts.keydownCallback === 'function') 
+      if (typeof this.opts.keydownCallback === 'function')
       {
-        this.opts.keydownCallback(this, e);  
+        this.opts.keydownCallback(this, e);
       }
-      
+
       if (ctrl)
       {
         if (key === 90)
@@ -726,7 +724,7 @@ Redactor.prototype = {
         {
           this.shortcuts(e, 'italic'); // Ctrl + i
         }
-        else if (key === 74) 
+        else if (key === 74)
         {
           this.shortcuts(e, 'insertunorderedlist'); // Ctrl + j
         }
@@ -741,20 +739,20 @@ Redactor.prototype = {
         else if (key === 72)
         {
           this.shortcuts(e, 'subscript'); // Ctrl + h
-        }          
-      }  
-      
+        }
+      }
+
       // clear undo buffer
       if ( !ctrl && key !== 90)
       {
         this.opts.buffer = false;
       }
-      
+
       // enter
       if (pre === true && key === 13)
       {
         e.preventDefault();
-        
+
         this.insertNodeAtCaret(document.createTextNode('\r\n'));
       }
 
@@ -768,7 +766,7 @@ Redactor.prototype = {
         else
         {
           e.preventDefault();
-        
+
           this.insertNodeAtCaret(document.createTextNode('\t'));
         }
       }
@@ -783,21 +781,21 @@ Redactor.prototype = {
         return this.safariShiftKeyEnter(e, key);
       }
 
-    }, this));    
+    }, this));
   },
   build: function(mobile)
   {
     if (mobile !== true)
-    {    
+    {
       // container
       this.$mgtbox = $mgt('<div class="redactor_box"></div>');
-  
+
       // air box
       if (this.opts.air)
       {
         this.air = $mgt('<div class="redactor_air" style="display: none;"></div>');
       }
-  
+
       // editor
       this.textareamode = true;
       if (this.$mgtel.get(0).tagName === 'TEXTAREA')
@@ -807,10 +805,10 @@ Redactor.prototype = {
       else
       {
         this.textareamode = false;
-        this.$mgteditor = this.$mgtel;        
+        this.$mgteditor = this.$mgtel;
         this.$mgtel = $mgt('<textarea name="' + this.$mgteditor.attr('id') + '"></textarea>').css('height', this.height);
       }
-      
+
       this.$mgteditor.addClass('redactor_editor').attr('contenteditable', true).attr('dir', this.opts.direction);
 
       if (this.opts.wym === true)
@@ -836,20 +834,20 @@ Redactor.prototype = {
         this.$mgtbox.insertAfter(this.$mgtel).append(this.$mgteditor).append(this.$mgtel);
       }
       else
-      {  
+      {
         // get html
-        html = this.$mgteditor.html();  
-        
+        html = this.$mgteditor.html();
+
         this.$mgtbox.insertAfter(this.$mgteditor).append(this.$mgtel).append(this.$mgteditor);
-              
+
       }
-      
+
       // conver newlines to p
       html = this.paragraphy(html);
 
       // enable
       this.$mgteditor.html(html);
-      
+
       if (this.textareamode === false)
       {
         this.syncCode();
@@ -865,7 +863,7 @@ Redactor.prototype = {
         this.$mgtel.after(textarea);
       }
     }
-    
+
   },
   enableAir: function()
   {
@@ -875,39 +873,39 @@ Redactor.prototype = {
     }
 
     this.air.hide();
-    
+
     this.$mgteditor.bind('textselect', $mgt.proxy(function(e)
     {
       this.showAir(e);
-      
+
     }, this));
-    
+
     this.$mgteditor.bind('textunselect', $mgt.proxy(function()
     {
       this.air.hide();
-    
+
     }, this));
 
-  },  
+  },
   showAir: function(e)
   {
     $mgt('.redactor_air').hide();
-    
+
     var width = this.air.innerWidth();
     var left = e.clientX;
-    
+
     if ($mgt(document).width() < (left + width))
     {
       left = left - width;
     }
-    
+
     this.air.css({ left: left + 'px', top: (e.clientY + $mgt(document).scrollTop() + 14) + 'px' }).show();
   },
   syncCode: function()
   {
     this.$mgtel.val(this.$mgteditor.html());
   },
-  
+
   // API functions
   setCode: function(html)
   {
@@ -934,28 +932,28 @@ Redactor.prototype = {
   destroy: function()
   {
     var html = this.getCode();
-    
+
     if (this.textareamode)
     {
       this.$mgtbox.after(this.$mgtel);
       this.$mgtbox.remove();
-      this.$mgtel.height(this.height).val(html).show();      
+      this.$mgtel.height(this.height).val(html).show();
     }
     else
     {
       this.$mgtbox.after(this.$mgteditor);
       this.$mgtbox.remove();
-      this.$mgteditor.removeClass('redactor_editor').removeClass('redactor_editor_wym').attr('contenteditable', false).html(html).show();          
+      this.$mgteditor.removeClass('redactor_editor').removeClass('redactor_editor_wym').attr('contenteditable', false).html(html).show();
     }
-    
+
     $mgt('.redactor_air').remove();
-    
+
     for (var i = 0; i < this.dropdowns.length; i++)
     {
       this.dropdowns[i].remove();
       delete(this.dropdowns[i]);
-    }      
-    
+    }
+
   },
   // end API functions
 
@@ -973,11 +971,11 @@ Redactor.prototype = {
       {
         $mgt(s).attr('unselectable', 'on');
       }
-      
+
       this.resizeImage(s);
-      
+
     }, this));
-  
+
   },
   observeTables: function()
   {
@@ -987,7 +985,7 @@ Redactor.prototype = {
   {
     var scrolltop = $mgt(document).scrollTop();
     var boxtop = this.$mgtbox.offset().top;
-  
+
     if (scrolltop > boxtop)
     {
       this.fixed = true;
@@ -1007,19 +1005,19 @@ Redactor.prototype = {
     this.opts.buffer = this.$mgteditor.html();
   },
   getBuffer: function()
-  {  
+  {
     if (this.opts.buffer === false)
     {
       return false;
     }
-    
+
     this.$mgteditor.html(this.opts.buffer);
-    
+
     if (!$mgt.browser.msie)
     {
       this.restoreSelection();
-    }  
-      
+    }
+
     this.opts.buffer = false;
   },
 
@@ -1032,7 +1030,7 @@ Redactor.prototype = {
 
       if (cmd === 'inserthtml' && $mgt.browser.msie)
       {
-        document.selection.createRange().pasteHTML(param);          
+        document.selection.createRange().pasteHTML(param);
       }
       else if (cmd === 'formatblock' && $mgt.browser.msie)
       {
@@ -1061,10 +1059,10 @@ Redactor.prototype = {
         {
           var parent2 = $mgt(parent).parent();
           if ($mgt(parent2).get(0).tagName === 'BLOCKQUOTE')
-          {            
+          {
             var node = $mgt('<p>' + $mgt(parent).html() + '</p>');
-            $mgt(parent2).replaceWith(node);  
-            this.setFocusNode(node.get(0));            
+            $mgt(parent2).replaceWith(node);
+            this.setFocusNode(node.get(0));
           }
           else
           {
@@ -1087,52 +1085,52 @@ Redactor.prototype = {
         {
           document.execCommand(cmd, false, param);
         }
-      }        
+      }
       else
       {
         document.execCommand(cmd, false, param);
-      }  
-      
+      }
+
       if (cmd === 'inserthorizontalrule')
       {
         this.$mgteditor.find('hr').removeAttr('id');
       }
-      
+
       this.syncCode();
-      
+
       if (this.oldIE())
       {
         this.$mgteditor.focus();
       }
-      
+
       if (typeof this.opts.execCommandCallback === 'function')
       {
         this.opts.execCommandCallback(this, cmd);
       }
-              
+
       if (this.opts.air)
       {
-        this.air.hide();  
+        this.air.hide();
       }
     }
     catch (e) { }
   },
-  
+
   // FORMAT NEW LINE
   formatNewLine: function(e)
   {
     if ($mgt.browser.webkit)
     {
-      var parent = this.getParentNode();  
-      
+      var parent = this.getParentNode();
+
       if (parent.nodeName === 'DIV' && parent.className === 'redactor_editor')
       {
         e.preventDefault();
-        
+
         var element = $mgt(this.getCurrentNode());
 
         if (element.get(0).tagName === 'DIV' && (element.html() === '' || element.html() === '<br>'))
-        {          
+        {
           var newElement = $mgt('<p>').append(element.clone().get(0).childNodes);
           element.replaceWith(newElement);
           newElement.html('<br />');
@@ -1149,11 +1147,11 @@ Redactor.prototype = {
         // convert links
         if (this.opts.convertLinks)
         {
-          
+
           this.$mgteditor.linkify();
         }
       }
-      else 
+      else
       {
         this.syncCode();
         return true;
@@ -1172,7 +1170,7 @@ Redactor.prototype = {
     if (e.shiftKey && key === 13)
     {
       e.preventDefault();
-    
+
       var node1 = $mgt('<span><br /></span>');
       this.insertNodeAtCaret(node1.get(0));
 
@@ -1185,27 +1183,27 @@ Redactor.prototype = {
       return true;
     }
   },
-  
+
   // FORMAT EMPTY
   formatEmpty: function(e)
   {
     var html = $mgt.trim(this.$mgteditor.html());
-    
+
     if ($mgt.browser.mozilla)
     {
       html = html.replace(/<br>/i, '');
     }
-    
+
     if (html === '')
     {
       e.preventDefault();
-      
+
       var nodehtml = this.opts.allEmptyHtml;
       if ($mgt.browser.mozilla)
       {
         nodehtml = this.opts.mozillaEmptyHtml;
       }
-      
+
       var node = $mgt(nodehtml).get(0);
       this.$mgteditor.html(node);
       this.setFocusNode(node);
@@ -1234,21 +1232,21 @@ Redactor.prototype = {
                 return this.opts.mozillaEmptyHtml;
             }
         }
-        
+
         // convert div to p
         if (this.opts.convertDivs)
         {
             str = str.replace(/<div(.*?)>([\w\W]*?)<\/div>/gi, '<p>$2</p>');
         }
-        
+
         // inner functions
         var X = function(x, a, b) { return x.replace(new RegExp(a, 'g'), b); };
         var R = function(a, b) { return X(str, a, b); };
 
         // block elements
         var blocks = '(table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|style|script|object|input|param|p|h[1-6])';
-    
-        //str = '<p>' + str;        
+
+        //str = '<p>' + str;
         str += '\n';
 
         R('<br />\\s*<br />', '\n\n');
@@ -1280,32 +1278,32 @@ Redactor.prototype = {
     },
 
     // REMOVE TAGS
-    stripTags: function(html) 
+    stripTags: function(html)
     {
         var allowed = this.opts.allowedTags;
         var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-        return html.replace(tags, function ($0, $1) 
+        return html.replace(tags, function ($0, $1)
         {
             return $.inArray($1.toLowerCase(), allowed) > '-1' ? $0 : '';
         });
     },
 
-    
+
     // PASTE CLEANUP
     pasteCleanUp: function(html)
-    {    
-        // remove comments and php tags        
+    {
+        // remove comments and php tags
         html = html.replace(/<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi, '');
-    
+
         // remove nbsp
-        html = html.replace(/(&nbsp;){1,}/gi, '&nbsp;');                    
-    
+        html = html.replace(/(&nbsp;){1,}/gi, '&nbsp;');
+
         // remove google docs marker
-        html = html.replace(/<b\sid="internal-source-marker(.*?)">([\w\W]*?)<\/b>/gi, "$2");        
-    
+        html = html.replace(/<b\sid="internal-source-marker(.*?)">([\w\W]*?)<\/b>/gi, "$2");
+
         // strip tags
         html = this.stripTags(html);
-            
+
         // prevert
         html = html.replace(/<td><br><\/td>/gi, '[td]');
         html = html.replace(/<a(.*?)>([\w\W]*?)<\/a>/gi, '[a$1]$2[/a]');
@@ -1314,14 +1312,14 @@ Redactor.prototype = {
         html = html.replace(/<audio(.*?)>([\w\W]*?)<\/audio>/gi, '[audio$1]$2[/audio]');
         html = html.replace(/<object(.*?)>([\w\W]*?)<\/object>/gi, '[object$1]$2[/object]');
         html = html.replace(/<img(.*?)>/gi, '[img$1]');
-    
+
         // remove attributes
         html = html.replace(/<(\w+)([\w\W]*?)>/gi, '<$1>');
-        
+
         // remove empty
         html = html.replace(/<[^\/>][^>]*>(\s*|\t*|\n*|&nbsp;|<br>)<\/[^>]+>/gi, '');
         html = html.replace(/<[^\/>][^>]*>(\s*|\t*|\n*|&nbsp;|<br>)<\/[^>]+>/gi, '');
-        
+
         // revert
         html = html.replace(/\[td\]/gi, '<td><br></td>');
         html = html.replace(/\[a(.*?)\]([\w\W]*?)\[\/a\]/gi, '<a$1>$2</a>');
@@ -1329,25 +1327,25 @@ Redactor.prototype = {
         html = html.replace(/\[video(.*?)\]([\w\W]*?)\[\/video\]/gi, '<video$1>$2[/video>');
         html = html.replace(/\[audio(.*?)\]([\w\W]*?)\[\/audio\]/gi, '<audio$1>$2[/audio>');
         html = html.replace(/\[object(.*?)\]([\w\W]*?)\[\/object\]/gi, '<object$1>$2</object>');
-        html = html.replace(/\[img(.*?)\]/gi, '<img$1>');                
-    
+        html = html.replace(/\[img(.*?)\]/gi, '<img$1>');
+
         // convert div to p
         if (this.opts.convertDivs)
         {
-            html = html.replace(/<div(.*?)>([\w\W]*?)<\/div>/gi, '<p>$2</p>');    
+            html = html.replace(/<div(.*?)>([\w\W]*?)<\/div>/gi, '<p>$2</p>');
         }
-        
+
         // remove span
         html = html.replace(/<span>([\w\W]*?)<\/span>/gi, '$1');
-        
+
         html = html.replace(/\n{3,}/gi, '\n');
-    
+
         // remove dirty p
         html = html.replace(/<p><p>/g, '<p>');
-        html = html.replace(/<\/p><\/p>/g, '</p>');    
-    
-        this.execCommand('inserthtml', html);    
-        
+        html = html.replace(/<\/p><\/p>/g, '</p>');
+
+        this.execCommand('inserthtml', html);
+
         if (this.opts.autoresize === true)
         {
             $(document.body).scrollTop(this.saveScroll);
@@ -1356,10 +1354,10 @@ Redactor.prototype = {
         {
             this.$editor.scrollTop(this.saveScroll);
         }
-        
-    },    
-    
-        
+
+    },
+
+
     // TEXTAREA CODE FORMATTING
     formattingRemove: function(html)
     {
@@ -1374,37 +1372,37 @@ Redactor.prototype = {
                 prebuffer.push(s);
             });
         }
-    
+
         html = html.replace(/\s{2,}/g, ' ');
-        html = html.replace(/\n/g, ' ');    
+        html = html.replace(/\n/g, ' ');
         html = html.replace(/[\t]*/g, '');
         html = html.replace(/\n\s*\n/g, "\n");
         html = html.replace(/^[\s\n]*/g, '');
-        html = html.replace(/[\s\n]*$/g, '');    
+        html = html.replace(/[\s\n]*$/g, '');
         html = html.replace(/>\s+</g, '><');
-        
+
         if (prebuffer)
         {
             $mgt.each(prebuffer, function(i,s)
             {
                 html = html.replace('prebuffer_' + i, s);
-            });        
-        
+            });
+
             prebuffer = [];
         }
-        
-        return html;        
+
+        return html;
     },
     formattingIndenting: function(html)
     {
         html = html.replace(/<li/g, "\t<li");
         html = html.replace(/<tr/g, "\t<tr");
         html = html.replace(/<td/g, "\t\t<td");
-        html = html.replace(/<\/tr>/g, "\t</tr>");    
-        
-        return html;    
+        html = html.replace(/<\/tr>/g, "\t</tr>");
+
+        return html;
     },
-    formattingEmptyTags: function(html)        
+    formattingEmptyTags: function(html)
     {
         var etags = ["<pre></pre>","<blockquote>\\s*</blockquote>","<em>\\s*</em>","<ul></ul>","<ol></ol>","<li></li>","<table></table>","<tr></tr>","<span>\\s*<span>", "<span>&nbsp;<span>", "<b>\\s*</b>", "<b>&nbsp;</b>", "<p>\\s*</p>", "<p>&nbsp;</p>",  "<p>\\s*<br>\\s*</p>", "<div>\\s*</div>", "<div>\\s*<br>\\s*</div>"];
         for (var i = 0; i < etags.length; ++i)
@@ -1412,7 +1410,7 @@ Redactor.prototype = {
             var bbb = etags[i];
             html = html.replace(new RegExp(bbb,'gi'), "");
         }
-        
+
         return html;
     },
     formattingAddBefore: function(html)
@@ -1424,60 +1422,60 @@ Redactor.prototype = {
             var eee = btags[i];
             html = html.replace(new RegExp(eee,'gi'),lb+eee);
         }
-        
+
         return html;
     },
     formattingAddAfter: function(html)
     {
-        var lb = '\r\n';        
+        var lb = '\r\n';
         var atags = ['</p>', '</div>', '</h1>', '</h2>', '</h3>', '</h4>', '</h5>', '</h6>', '<br>', '<br />', '</dl>', '</dt>', '</dd>', '</form>', '</blockquote>', '</pre>', '</legend>', '</fieldset>', '</object>', '</embed>', '</textarea>', '</select>', '</option>', '</table>', '</thead>', '</tbody>', '</tr>', '</td>', '</th>', '</figure>'];
         for (var i = 0; i < atags.length; ++i)
         {
             var aaa = atags[i];
             html = html.replace(new RegExp(aaa,'gi'),aaa+lb);
         }
-        
+
         return html;
-    },    
+    },
     formatting: function(html)
     {
         html = this.formattingRemove(html);
-    
+
         // empty tags
         html = this.formattingEmptyTags(html);
-                    
+
         // add formatting before
         html = this.formattingAddBefore(html);
-        
+
         // add formatting after
         html = this.formattingAddAfter(html);
 
         // indenting
-        html = this.formattingIndenting(html);    
-    
-        return html;    
+        html = this.formattingIndenting(html);
+
+        return html;
     },
-    
+
     toggle: function()
   {
     var html;
-  
+
     if (this.opts.visual)
     {
       this.$mgteditor.hide();
-      
+
       html = this.$mgteditor.html();
       html = $mgt.trim(this.formatting(html));
-        
+
       this.$mgtel.height(this.$mgteditor.innerHeight()).val(html).show().focus();
-      
+
       this.setBtnActive('html');
       this.opts.visual = false;
     }
     else
     {
       this.$mgtel.hide();
-      
+
       this.$mgteditor.html(this.$mgtel.val());
       this.$mgteditor.show();
 
@@ -1496,10 +1494,10 @@ Redactor.prototype = {
       }
 
       this.$mgteditor.focus();
-      
+
       this.setBtnInactive('html');
       this.opts.visual = true;
-      
+
       this.observeImages();
       this.observeTables();
     }
@@ -1522,9 +1520,9 @@ Redactor.prototype = {
     {
       return false;
     }
-    
+
     this.$mgttoolbar = $mgt('<ul>').addClass('redactor_toolbar');
-    
+
     if (this.opts.air)
     {
       $mgt(this.air).append(this.$mgttoolbar);
@@ -1534,19 +1532,19 @@ Redactor.prototype = {
     {
       this.$mgtbox.prepend(this.$mgttoolbar);
     }
-    
+
     $mgt.each(this.opts.buttons, $mgt.proxy(function(i,key)
     {
-      
-      if (key !== '|' && typeof this.opts.toolbar[key] !== 'undefined') 
+
+      if (key !== '|' && typeof this.opts.toolbar[key] !== 'undefined')
       {
         var s = this.opts.toolbar[key];
-      
+
         if (this.opts.fileUpload === false && key === 'file')
         {
           return true;
         }
-      
+
         var li = $mgt('<li>');
         var a = this.buildButton(key, s);
 
@@ -1554,7 +1552,7 @@ Redactor.prototype = {
         if (key === 'backcolor' || key === 'fontcolor' || typeof(s.dropdown) !== 'undefined')
         {
           var dropdown = $mgt('<div class="redactor_dropdown" style="display: none;">');
-          
+
           if (key === 'backcolor' || key === 'fontcolor')
           {
             dropdown = this.buildColorPicker(dropdown, key);
@@ -1572,11 +1570,11 @@ Redactor.prototype = {
 
           a.click(this.hdlShowDropDown);
         }
-        
+
         this.$mgttoolbar.append($mgt(li).append(a));
       }
 
-      
+
       if (key === '|')
       {
         this.$mgttoolbar.append($mgt('<li class="redactor_separator"></li>'));
@@ -1591,7 +1589,7 @@ Redactor.prototype = {
   buildButton: function(key, s)
   {
     var button = $mgt('<a href="javascript:void(null);" title="' + s.title + '" class="redactor_btn_' + key + '"></a>');
-    
+
     if (typeof s.func === 'undefined')
     {
       button.click($mgt.proxy(function() { this.execCommand(s.exec, key); }, this));
@@ -1599,13 +1597,13 @@ Redactor.prototype = {
     else if (s.func !== 'show')
     {
       button.click($mgt.proxy(function(e) {
-      
-        this[s.func](e); 
-        
+
+        this[s.func](e);
+
       }, this));
     }
 
-    if (typeof s.callback !== 'undefined') 
+    if (typeof s.callback !== 'undefined')
     {
       button.click($mgt.proxy(function(e) { s.callback(this, e, key); }, this));
     }
@@ -1621,7 +1619,7 @@ Redactor.prototype = {
         {
           d.className = '';
         }
-        
+
         var drop_a;
         if (typeof d.name !== 'undefined' && d.name === 'separator')
         {
@@ -1642,7 +1640,7 @@ Redactor.prototype = {
         }
 
         $mgt(dropdown).append(drop_a);
-        
+
       }, this)
     );
 
@@ -1667,7 +1665,7 @@ Redactor.prototype = {
     {
       mode = 'forecolor';
     }
-    
+
     $mgt(dropdown).width(210);
 
     var len = this.opts.colors.length;
@@ -1679,28 +1677,28 @@ Redactor.prototype = {
       $mgt(dropdown).append(swatch);
 
       var _self = this;
-      $mgt(swatch).click(function() 
-      { 
+      $mgt(swatch).click(function()
+      {
         _self.execCommand(mode, $mgt(this).attr('rel'));
-        
+
         if (mode === 'forecolor')
         {
           _self.$mgteditor.find('font').replaceWith(function() {
-            
+
             return $mgt('<span style="color: ' + $mgt(this).attr('color') + ';">' + $mgt(this).html() + '</span>');
-            
+
           });
         }
-        
+
         if ($mgt.browser.msie && mode === 'BackColor')
         {
           _self.$mgteditor.find('font').replaceWith(function() {
-            
+
             return $mgt('<span style="' + $mgt(this).attr('style') + '">' + $mgt(this).html() + '</span>');
-            
-          });            
+
+          });
         }
-        
+
       });
     }
 
@@ -1730,7 +1728,7 @@ Redactor.prototype = {
     this.syncCode();
   },
 
-  
+
   // DROPDOWNS
   showDropDown: function(e, dropdown, key)
   {
@@ -1739,31 +1737,31 @@ Redactor.prototype = {
       this.hideAllDropDown();
     }
     else
-    {  
+    {
       this.hideAllDropDown();
 
       this.setBtnActive(key);
       this.getBtn(key).addClass('dropact');
 
       var left = this.getBtn(key).offset().left;
-      
+
       if (this.opts.air)
       {
-        var air_top = this.air.offset().top;  
+        var air_top = this.air.offset().top;
 
-        $mgt(dropdown).css({ position: 'absolute', left: left + 'px', top: air_top+30 + 'px' }).show();    
-      }        
+        $mgt(dropdown).css({ position: 'absolute', left: left + 'px', top: air_top+30 + 'px' }).show();
+      }
       else if (this.opts.fixed && this.fixed)
       {
         $mgt(dropdown).css({ position: 'fixed', left: left + 'px', top: '30px' }).show();
       }
-      else 
+      else
       {
         var top = this.$mgttoolbar.offset().top + 30;
         $mgt(dropdown).css({ position: 'absolute', left: left + 'px', top: top + 'px' }).show();
       }
     }
-    
+
   },
   hideAllDropDown: function()
   {
@@ -1779,8 +1777,8 @@ Redactor.prototype = {
       this.hideAllDropDown();
     }
   },
-  
-  // SELECTION AND NODE MANIPULATION    
+
+  // SELECTION AND NODE MANIPULATION
   getSelection: function ()
   {
     if (typeof window.getSelection !== 'undefined')
@@ -1800,21 +1798,21 @@ Redactor.prototype = {
     return div.innerHTML;
   },
   extractContent: function()
-  {   
+  {
     var node = this.$mgteditor.get(0);
     var frag = document.createDocumentFragment(), child;
     while ((child = node.firstChild))
     {
       frag.appendChild(child);
     }
-    
+
     return frag;
   },
   saveSelection: function()
   {
     this.savedSel = null;
     this.savedSelObj = null;
-  
+
     if ($mgt.browser.msie && parseInt($mgt.browser.version, 10) < 9)
     {
       var node = this.$mgteditor.get(0);
@@ -1824,31 +1822,31 @@ Redactor.prototype = {
     else
     {
       this.savedSel = window.Selection.getOrigin(window);
-      this.savedSelObj = window.Selection.getFocus(window);      
+      this.savedSelObj = window.Selection.getFocus(window);
     }
   },
   restoreSelection: function()
-  {  
+  {
     if (this.savedSel !== null && this.savedSelObj !== null && this.savedSel[0].tagName !== 'BODY')
     {
       window.Selection.setSelection(window, this.savedSel[0], this.savedSel[1], this.savedSelObj[0], this.savedSelObj[1]);
     }
-    else 
+    else
     {
       this.$mgteditor.focus();
-    }  
+    }
   },
   getParentNode: function()
   {
     if (typeof window.getSelection !== 'undefined')
     {
       var s = window.getSelection();
-      if (s.rangeCount > 0) 
+      if (s.rangeCount > 0)
       {
         return this.getSelection().getRangeAt(0).startContainer.parentNode;
       }
       else return false;
-      
+
     }
     else if (typeof document.selection !== 'undefined')
     {
@@ -1872,9 +1870,9 @@ Redactor.prototype = {
     {
       return false;
     }
-  
+
     try {
-  
+
       var range = document.createRange();
       var selection = this.getSelection();
 
@@ -1886,16 +1884,16 @@ Redactor.prototype = {
       }
 
       this.$mgteditor.focus();
-    
+
     } catch (e) { }
-    
+
   },
   insertNodeAtCaret: function (node)
   {
     if (window.getSelection)
     {
       var sel = this.getSelection();
-      if (sel.rangeCount) 
+      if (sel.rangeCount)
       {
         var range = sel.getRangeAt(0);
         range.collapse(false);
@@ -1934,9 +1932,9 @@ Redactor.prototype = {
         {
           container.appendChild(sel.getRangeAt(i).cloneContents());
         }
-        
+
         html = container.innerHTML;
-  
+
       }
     }
     else if (document.selection)
@@ -1946,10 +1944,10 @@ Redactor.prototype = {
         html = document.selection.createRange().htmlText;
       }
     }
-  
+
     return html;
   },
-  
+
   // BUTTONS MANIPULATIONS
   getBtn: function(key)
   {
@@ -1963,7 +1961,7 @@ Redactor.prototype = {
   {
     this.getBtn(key).removeClass('act');
   },
-  
+
   // RESIZE IMAGES
   resizeImage: function(resize)
   {
@@ -1973,7 +1971,7 @@ Redactor.prototype = {
     var start_y;
     var ratio = $mgt(resize).width()/$mgt(resize).height();
     var min_w = 10;
-    var min_h = 10;      
+    var min_h = 10;
 
     $mgt(resize).hover(function() { $mgt(resize).css('cursor', 'nw-resize'); }, function() { $mgt(resize).css('cursor','default'); clicked = false; });
 
@@ -1987,14 +1985,14 @@ Redactor.prototype = {
       start_x = Math.round(e.pageX - $mgt(resize).eq(0).offset().left);
       start_y = Math.round(e.pageY - $mgt(resize).eq(0).offset().top);
     });
-    
+
     $mgt(resize).mouseup($mgt.proxy(function(e)
     {
       clicked = false;
       this.syncCode();
-      
+
     }, this));
-    
+
     $mgt(resize).click($mgt.proxy(function(e)
     {
       if (clicker)
@@ -2009,25 +2007,25 @@ Redactor.prototype = {
       if (clicked)
       {
         clicker = false;
-      
+
         var mouse_x = Math.round(e.pageX - $mgt(this).eq(0).offset().left) - start_x;
         var mouse_y = Math.round(e.pageY - $mgt(this).eq(0).offset().top) - start_y;
-        
+
         var div_h = $mgt(resize).height();
-        
+
         var new_h = parseInt(div_h, 10) + mouse_y;
         var new_w = new_h*ratio;
-        
+
         if (new_w > min_w)
         {
           $mgt(resize).width(new_w);
         }
-        
+
         if (new_h > min_h)
         {
           $mgt(resize).height(new_h);
         }
-        
+
         start_x = Math.round(e.pageX - $mgt(this).eq(0).offset().left);
         start_y = Math.round(e.pageY - $mgt(this).eq(0).offset().top);
       }
@@ -2038,28 +2036,28 @@ Redactor.prototype = {
   showTable: function()
   {
     this.saveSelection();
-  
+
     this.modalInit(RLANG.table, 'table', 300, $mgt.proxy(function()
-      {        
+      {
         $mgt('#redactor_insert_table_btn').click($mgt.proxy(this.insertTable, this));
       }, this),
-      
+
       function()
       {
         $mgt('#redactor_table_rows').focus();
-      }      
+      }
     );
   },
   insertTable: function()
   {
     var rows = $mgt('#redactor_table_rows').val();
     var columns = $mgt('#redactor_table_columns').val();
-    
+
     var table_box = $mgt('<div></div>');
-    
+
     var tableid = Math.floor(Math.random() * 99999);
     var table = $mgt('<table id="table' + tableid + '"><tbody></tbody></table>');
-    
+
     for (var i = 0; i < rows; i++)
     {
       var row = $mgt('<tr></tr>');
@@ -2070,13 +2068,13 @@ Redactor.prototype = {
       }
       $mgt(table).append(row);
     }
-    
+
     $mgt(table_box).append(table);
     var html = $mgt(table_box).html() + '<p></p>';
-    
+
     this.restoreSelection();
     this.execCommand('inserthtml', html);
-    this.modalClose();      
+    this.modalClose();
     this.observeTables();
 
   },
@@ -2094,7 +2092,7 @@ Redactor.prototype = {
 
     this.$mgtcurrent_td = $mgt(e.target);
     this.$mgtcurrent_td.addClass('current');
-    
+
     this.$mgtcurrent_tr = $mgt(e.target).parents('tr');
   },
   deleteTable: function()
@@ -2111,12 +2109,12 @@ Redactor.prototype = {
   deleteColumn: function()
   {
     var index = $mgt(this.$mgtcurrent_td).get(0).cellIndex;
-    
+
     $mgt(this.$mgttable).find('tr').each(function()
     {
       $mgt(this).find('td').eq(index).remove();
     });
-    
+
     this.syncCode();
   },
   addHead: function()
@@ -2189,10 +2187,10 @@ Redactor.prototype = {
     this.$mgttable_tr.each(function(i,s)
     {
       var current = $mgt(s).find('td').eq(index);
-      
+
       var td = current.clone();
       td.html('&nbsp;');
-      
+
       if (type === 'after')
       {
         $mgt(current).after(td);
@@ -2215,7 +2213,7 @@ Redactor.prototype = {
       {
         $mgt('#redactor_insert_video_btn').click($mgt.proxy(this.insertVideo, this));
       }, this),
-      
+
       function()
       {
         $mgt('#redactor_insert_video_area').focus();
@@ -2226,7 +2224,7 @@ Redactor.prototype = {
   {
     var data = $mgt('#redactor_insert_video_area').val();
     data = this.stripTags(data);
-    
+
     this.restoreSelection();
     this.execCommand('inserthtml', data);
     this.modalClose();
@@ -2261,7 +2259,7 @@ Redactor.prototype = {
   {
     $mgt(el).remove();
     this.modalClose();
-    this.syncCode();      
+    this.syncCode();
   },
   imageSave: function(el)
   {
@@ -2270,7 +2268,7 @@ Redactor.prototype = {
     $mgt(el).attr('alt', $mgt('#redactor_file_alt').val());
 
     var floating = $mgt('#redactor_form_image_align').val();
-  
+
     if (floating === 'left')
     {
       $mgt(el).css({ 'float': 'left', margin: '0 10px 10px 0' });
@@ -2283,7 +2281,7 @@ Redactor.prototype = {
     {
       $mgt(el).css({ 'float': 'none', margin: '0' });
     }
-    
+
     // as link
     var link = $mgt.trim($mgt('#redactor_file_link').val());
     if (link !== '')
@@ -2308,7 +2306,7 @@ Redactor.prototype = {
     this.modalClose();
     this.observeImages();
     this.syncCode();
-    
+
   },
   showImage: function()
   {
@@ -2320,21 +2318,21 @@ Redactor.prototype = {
       if (this.opts.imageGetJson !== false)
       {
         $mgt.getJSON(this.opts.imageGetJson, $mgt.proxy(function(data) {
-          
+
           var folders = {};
           var z = 0;
-          
+
           // folders
           $mgt.each(data, $mgt.proxy(function(key, val)
           {
             if (typeof val.folder !== 'undefined')
             {
               z++;
-              folders[val.folder] = z;              
+              folders[val.folder] = z;
             }
-                      
+
           }, this));
-          
+
           var folderclass = false;
           $mgt.each(data, $mgt.proxy(function(key, val)
           {
@@ -2344,8 +2342,8 @@ Redactor.prototype = {
             {
               thumbtitle = val.title;
             }
-            
-            var folderkey = 0;            
+
+            var folderkey = 0;
             if (!$mgt.isEmptyObject(folders) && typeof val.folder !== 'undefined')
             {
               folderkey = folders[val.folder];
@@ -2354,32 +2352,32 @@ Redactor.prototype = {
                 folderclass = '.redactorfolder' + folderkey;
               }
             }
-            
+
             var img = $mgt('<img src="' + val.thumb + '" class="redactorfolder redactorfolder' + folderkey + '" rel="' + val.image + '" title="' + thumbtitle + '" />');
             $mgt('#redactor_image_box').append(img);
             $mgt(img).click($mgt.proxy(this.imageSetThumb, this));
-            
-            
+
+
           }, this));
-          
+
           // folders
           if (!$mgt.isEmptyObject(folders))
           {
             $mgt('.redactorfolder').hide();
             $mgt(folderclass).show();
-                      
+
             var onchangeFunc = function(e)
             {
               $mgt('.redactorfolder').hide();
               $mgt('.redactorfolder' + $mgt(e.target).val()).show();
             }
-          
+
             var select = $mgt('<select id="redactor_image_box_select">');
             $mgt.each(folders, function(k,v)
             {
               select.append($mgt('<option value="' + v + '">' + k + '</option>'));
             });
-            
+
             $mgt('#redactor_image_box').before(select);
             select.change(onchangeFunc);
           }
@@ -2390,14 +2388,14 @@ Redactor.prototype = {
       {
         $mgt('#redactor_tabs a').eq(1).remove();
       }
-      
+
       if (this.opts.imageUpload !== false)
       {
-        
+
         // dragupload
         if (this.opts.uploadCrossDomain === false && this.isMobile() === false)
         {
-          
+
           if ($mgt('#redactor_file').size() !== 0)
           {
             $mgt('#redactor_file').dragupload(
@@ -2415,12 +2413,12 @@ Redactor.prototype = {
       else
       {
         $mgt('.redactor_tab').hide();
-        if (this.opts.imageGetJson === false) 
+        if (this.opts.imageGetJson === false)
         {
           $mgt('#redactor_tabs').remove();
           $mgt('#redactor_tab3').show();
         }
-        else 
+        else
         {
           var tabs = $mgt('#redactor_tabs a');
           tabs.eq(0).remove();
@@ -2432,13 +2430,13 @@ Redactor.prototype = {
       $mgt('#redactor_upload_btn').click($mgt.proxy(this.imageUploadCallbackLink, this));
 
     }, this);
-    
+
     var endCallback = $mgt.proxy(function()
     {
       if (this.opts.imageUpload === false && this.opts.imageGetJson === false)
       {
         $mgt('#redactor_file_link').focus();
-      }        
+      }
     }, this);
 
     this.modalInit(RLANG.image, 'image', 570, handler, endCallback, true);
@@ -2461,35 +2459,35 @@ Redactor.prototype = {
     }
   },
   imageUploadCallback: function(data)
-  {        
+  {
     this._imageSet(data);
   },
   _imageSet: function(json, link)
   {
-    this.restoreSelection();    
-  
+    this.restoreSelection();
+
     if (json !== false)
     {
       var html = '', data = '';
       if (link !== true)
       {
-        data = $mgt.parseJSON(json);    
+        data = $mgt.parseJSON(json);
         html = '<p><img src="' + data.filelink + '" /></p>';
       }
       else
       {
         html = json;
       }
-      
+
       this.execCommand('inserthtml', html);
-    
+
       // upload image callback
-      if (link !== true && typeof this.opts.imageUploadCallback === 'function') 
+      if (link !== true && typeof this.opts.imageUploadCallback === 'function')
       {
         this.opts.imageUploadCallback(this, data);
       }
     }
-    
+
     this.modalClose();
     this.observeImages();
   },
@@ -2500,11 +2498,11 @@ Redactor.prototype = {
     this.saveSelection();
 
     var handler = $mgt.proxy(function()
-    {      
+    {
       this.insert_link_node = false;
       var sel = this.getSelection();
       var url = '', text = '', target = '';
-      
+
       if ($mgt.browser.msie)
       {
         var parent = this.getParentNode();
@@ -2528,13 +2526,13 @@ Redactor.prototype = {
         }
       }
       else
-      {          
+      {
         if (sel && sel.anchorNode && sel.anchorNode.parentNode.tagName === 'A')
         {
           url = sel.anchorNode.parentNode.href;
           text = sel.anchorNode.parentNode.text;
           target = sel.anchorNode.parentNode.target;
-          
+
           if (sel.toString() === '')
           {
             this.insert_link_node = sel.anchorNode.parentNode;
@@ -2545,11 +2543,11 @@ Redactor.prototype = {
           text = sel.toString();
         }
       }
-      
+
       $mgt('.redactor_link_text').val(text);
-      
+
       var turl = url.replace(self.location.href, '');
-      
+
       if (url.search('mailto:') === 0)
       {
         this.setModalTab(2);
@@ -2559,8 +2557,8 @@ Redactor.prototype = {
       }
       else if (turl.search(/^#/gi) === 0)
       {
-        this.setModalTab(3);  
-        
+        this.setModalTab(3);
+
         $mgt('#redactor_tab_selected').val(3);
         $mgt('#redactor_link_anchor').val(turl.replace(/^#/gi, ''));
       }
@@ -2568,17 +2566,17 @@ Redactor.prototype = {
       {
         $mgt('#redactor_link_url').val(url);
       }
-      
+
       if (target === '_blank')
       {
         $mgt('#redactor_link_blank').attr('checked', true);
       }
-      
+
       $mgt('#redactor_insert_link_btn').click($mgt.proxy(this.insertLink, this));
-      
+
 
     }, this);
-    
+
     var endCallback = function(url)
     {
       $mgt('#redactor_link_url').focus();
@@ -2592,7 +2590,7 @@ Redactor.prototype = {
   {
     var tab_selected = $mgt('#redactor_tab_selected').val();
     var link = '', text = '', target = '';
-    
+
     if (tab_selected === '1') // url
     {
       link = $mgt('#redactor_link_url').val();
@@ -2611,7 +2609,7 @@ Redactor.prototype = {
     {
       link = '#' + $mgt('#redactor_link_anchor').val();
       text = $mgt('#redactor_link_anchor_text').val();
-    }      
+    }
 
     this._insertLink('<a href="' + link + '" target="' + target + '">' +  text + '</a>&nbsp;', $mgt.trim(text), link, target);
 
@@ -2619,12 +2617,12 @@ Redactor.prototype = {
   _insertLink: function(a, text, link, target)
   {
     this.$mgteditor.focus();
-    this.restoreSelection();  
-  
+    this.restoreSelection();
+
     if (text !== '')
     {
       if (this.insert_link_node)
-      {        
+      {
         $mgt(this.insert_link_node).text(text);
         $mgt(this.insert_link_node).attr('href', link);
         if (target !== '')
@@ -2638,7 +2636,7 @@ Redactor.prototype = {
         this.execCommand('inserthtml', a);
       }
     }
-    
+
     this.modalClose();
   },
 
@@ -2646,17 +2644,17 @@ Redactor.prototype = {
   showFile: function()
   {
     this.saveSelection();
-  
+
     var handler = $mgt.proxy(function()
     {
       var sel = this.getSelection();
-    
+
       var text = '';
-      
+
       if (this.oldIE())
       {
         text = sel.text;
-      }        
+      }
       else
       {
         text = sel.toString();
@@ -2666,7 +2664,7 @@ Redactor.prototype = {
 
       // dragupload
       if (this.opts.uploadCrossDomain === false && this.isMobile() === false)
-      {            
+      {
         $mgt('#redactor_file').dragupload(
         {
           url: this.opts.fileUpload,
@@ -2683,47 +2681,47 @@ Redactor.prototype = {
         this.fileUploadCallback(data);
 
       }, this)});
-      
+
     }, this);
 
     this.modalInit(RLANG.file, 'file', 500, handler);
   },
   fileUploadCallback: function(json)
   {
-    this.restoreSelection();    
-  
+    this.restoreSelection();
+
     if (json !== false)
     {
       var data = $mgt.parseJSON(json);
       var text = $mgt('#redactor_filename').val();
-      
+
       if (text === '')
       {
         text = data.filename;
       }
-      
+
       var link = '<a href="' + data.filelink + '">' + text + '</a>';
-    
+
       // chrome fix
       if ($mgt.browser.webkit && !!window.chrome)
       {
-        link = link + '&nbsp;'; 
+        link = link + '&nbsp;';
       }
 
       this.execCommand('inserthtml', link);
 
       // file upload callback
-      if (typeof this.opts.fileUploadCallback === 'function') 
+      if (typeof this.opts.fileUploadCallback === 'function')
       {
         this.opts.fileUploadCallback(this, data);
       }
     }
-    
-    this.modalClose();
-  },  
 
-  
-  
+    this.modalClose();
+  },
+
+
+
   // MODAL
   modalInit: function(title, url, width, handler, endCallback)
   {
@@ -2749,13 +2747,13 @@ Redactor.prototype = {
     $mgt('#redactor_modal_close').click($mgt.proxy(this.modalClose, this));
 
     this.hdlModalClose = $mgt.proxy(function(e) { if ( e.keyCode === 27) { this.modalClose(); } }, this);
-    
+
     $mgt(document).keyup(this.hdlModalClose);
     this.$mgteditor.keyup(this.hdlModalClose);
 
     $mgt('#redactor_modal_inner').html(this.opts['modal_' + url]);
     $mgt('#redactor_modal_header').html(title);
-    
+
     // tabs
     if ($mgt('#redactor_tabs').size() !== 0)
     {
@@ -2770,7 +2768,7 @@ Redactor.prototype = {
           $mgt('.redactor_tab').hide();
           $mgt('#redactor_tab' + i).show();
           $mgt('#redactor_tab_selected').val(i);
-          
+
           if (that.isMobile() === false)
           {
             var height = $mgt('#redactor_modal').outerHeight();
@@ -2781,26 +2779,26 @@ Redactor.prototype = {
     }
 
     $mgt('#redactor_btn_modal_close').click($mgt.proxy(this.modalClose, this));
-    
+
     // callback
     if (typeof(handler) === 'function')
     {
       handler();
     }
-    
+
     // setup
     var height = $mgt('#redactor_modal').outerHeight();
 
     if (this.isMobile() === false)
-    {    
+    {
       $mgt('#redactor_modal').css({ position: 'fixed', top: '50%', left: '50%', width: width + 'px', height: 'auto', minHeight: 'auto', marginTop: '-' + (height+10)/2 + 'px', marginLeft: '-' + (width+60)/2 + 'px' }).fadeIn('fast');
-      
+
       this.modalSaveBodyOveflow = $mgt(document.body).css('overflow');
-      $mgt(document.body).css('overflow', 'hidden');      
+      $mgt(document.body).css('overflow', 'hidden');
     }
     else
     {
-      $mgt('#redactor_modal').css({ position: 'fixed', width: '100%', height: '100%', top: '0', left: '0', margin: '0', minHeight: '300px' }).show();      
+      $mgt('#redactor_modal').css({ position: 'fixed', width: '100%', height: '100%', top: '0', left: '0', margin: '0', minHeight: '300px' }).show();
     }
 
     // end callback
@@ -2823,15 +2821,15 @@ Redactor.prototype = {
         $mgt('#redactor_modal_overlay').hide();
         $mgt('#redactor_modal_overlay').unbind('click', this.modalClose);
       }
-      
+
       $mgt(document).unbind('keyup', this.hdlModalClose);
       this.$mgteditor.unbind('keyup', this.hdlModalClose);
 
     }, this));
-    
+
     if (this.isMobile() === false)
     {
-      $mgt(document.body).css('overflow', this.modalSaveBodyOveflow);  
+      $mgt(document.body).css('overflow', this.modalSaveBodyOveflow);
     }
 
   },
@@ -2841,7 +2839,7 @@ Redactor.prototype = {
     var tabs = $mgt('#redactor_tabs a');
     tabs.removeClass('redactor_tabs_act');
     tabs.eq(num-1).addClass('redactor_tabs_act');
-    $mgt('#redactor_tab' + num).show();      
+    $mgt('#redactor_tab' + num).show();
   },
 
   // UPLOAD
@@ -2869,9 +2867,9 @@ Redactor.prototype = {
     {
       this.element = $mgt('#' + element);
     }
-    
+
     this.element_action = this.element.attr('action');
-    
+
     // Auto or trigger
     if (this.uploadOptions.auto)
     {
@@ -2894,20 +2892,20 @@ Redactor.prototype = {
   uploadFrame : function()
   {
     this.id = 'f' + Math.floor(Math.random() * 99999);
-  
+
     var d = document.createElement('div');
     var iframe = '<iframe style="display:none" id="'+this.id+'" name="'+this.id+'"></iframe>';
     d.innerHTML = iframe;
     document.body.appendChild(d);
-  
+
     // Start
     if (this.uploadOptions.start)
     {
       this.uploadOptions.start();
     }
-  
+
     $mgt('#' + this.id).load($mgt.proxy(this.uploadLoaded, this));
-  
+
     return this.id;
   },
   uploadForm : function(f, name)
@@ -2917,23 +2915,23 @@ Redactor.prototype = {
       var formId = 'redactorUploadForm' + this.id;
       var fileId = 'redactorUploadFile' + this.id;
       this.form = $mgt('<form  action="' + this.uploadOptions.url + '" method="POST" target="' + name + '" name="' + formId + '" id="' + formId + '" enctype="multipart/form-data"></form>');
-      
+
       // append hidden fields
       if (this.opts.uploadFields !== false && typeof this.opts.uploadFields === 'object')
       {
         $mgt.each(this.opts.uploadFields, $mgt.proxy(function(k,v)
-        {          
+        {
           if (v.indexOf('#') === 0)
           {
             v = $mgt(v).val();
           }
-          
+
           var hidden = $mgt('<input type="hidden" name="' + k + '" value="' + v + '">');
           $mgt(this.form).append(hidden);
-    
+
         }, this));
-      }        
-      
+      }
+
       var oldElement = this.uploadOptions.input;
       var newElement = $mgt(oldElement).clone();
       $mgt(oldElement).attr('id', fileId);
@@ -2942,7 +2940,7 @@ Redactor.prototype = {
       $mgt(this.form).css('position', 'absolute');
       $mgt(this.form).css('top', '-2000px');
       $mgt(this.form).css('left', '-2000px');
-      $mgt(this.form).appendTo('body');  
+      $mgt(this.form).appendTo('body');
 
       this.form.submit();
     }
@@ -2952,16 +2950,16 @@ Redactor.prototype = {
       f.attr('method', 'POST');
       f.attr('enctype', 'multipart/form-data');
       f.attr('action', this.uploadOptions.url);
-  
+
       this.element.submit();
     }
-  
+
   },
   uploadLoaded : function()
   {
     var i = $mgt('#' + this.id);
     var d;
-    
+
     if (i.contentDocument)
     {
       d = i.contentDocument;
@@ -2974,13 +2972,13 @@ Redactor.prototype = {
     {
       d = window.frames[this.id].document;
     }
-    
+
     // Success
     if (this.uploadOptions.success)
     {
       if (typeof d !== 'undefined')
       {
-        // Remove bizarre <pre> tag wrappers around our json data:        
+        // Remove bizarre <pre> tag wrappers around our json data:
         var rawString = d.body.innerHTML;
         var jsonString = rawString.match(/\{.*\}/)[0];
         this.uploadOptions.success(jsonString);
@@ -2991,12 +2989,12 @@ Redactor.prototype = {
         this.uploadOptions.success(false);
       }
     }
-  
+
     this.element.attr('action', this.element_action);
     this.element.attr('target', '');
-  
+
   },
-  
+
   // UTILITY
   oldIE: function()
   {
@@ -3004,10 +3002,10 @@ Redactor.prototype = {
     {
       return true;
     }
-    
+
     return false;
   },
-  outerHTML: function(s) 
+  outerHTML: function(s)
   {
     return $mgt("<p>").append($mgt(s).eq(0).clone()).html();
   },
@@ -3015,7 +3013,7 @@ Redactor.prototype = {
   {
     return parseInt(str.replace('px',''), 10);
   },
-  isMobile: function(ipad) 
+  isMobile: function(ipad)
   {
     if (ipad === true && /(iPhone|iPod|iPad|BlackBerry|Android)/.test(navigator.userAgent))
     {
@@ -3037,25 +3035,25 @@ Redactor.prototype = {
 if(typeof $mgt != 'undefined') {
 
 // API
-$mgt.fn.getEditor = function() 
+$mgt.fn.getEditor = function()
 {
   return this.data('redactor').$mgteditor;
 };
 
-$mgt.fn.getCode = function() 
+$mgt.fn.getCode = function()
 {
   return this.data('redactor').getCode();
 };
 
-$mgt.fn.getText = function() 
+$mgt.fn.getText = function()
 {
-  return this.data('redactor').$mgteditor.text();  
-};  
+  return this.data('redactor').$mgteditor.text();
+};
 
-$mgt.fn.getSelected = function() 
+$mgt.fn.getSelected = function()
 {
-  return this.data('redactor').getSelectedHtml();  
-};      
+  return this.data('redactor').getSelectedHtml();
+};
 
 $mgt.fn.setCode = function(html)
 {
@@ -3086,84 +3084,84 @@ $mgt.fn.execCommand = function(cmd, param)
 }
 /*
   Plugin Drag and drop Upload v1.0.2
-  http://imperavi.com/ 
+  http://imperavi.com/
   Copyright 2012, Imperavi Inc.
 */
 (function($mgt){
-  
+
   "use strict";
-  
-  // Initialization  
+
+  // Initialization
   $mgt.fn.dragupload = function(options)
-  {  
+  {
     return this.each(function() {
       var obj = new Construct(this, options);
       obj.init();
     });
   };
-  
-  // Options and variables  
+
+  // Options and variables
   function Construct(el, options) {
 
     this.opts = $mgt.extend({
-    
+
       url: false,
       success: false,
       preview: false,
       uploadFields: false,
-      
+
       text: RLANG.drop_file_here,
       atext: RLANG.or_choose
-      
+
     }, options);
-    
+
     this.$mgtel = $mgt(el);
   }
 
   // Functionality
   Construct.prototype = {
     init: function()
-    {  
-      if (!$mgt.browser.msie) 
-      {  
+    {
+      if (!$mgt.browser.msie)
+      {
         this.droparea = $mgt('<div class="redactor_droparea"></div>');
-        this.dropareabox = $mgt('<div class="redactor_dropareabox">' + this.opts.text + '</div>');  
+        this.dropareabox = $mgt('<div class="redactor_dropareabox">' + this.opts.text + '</div>');
         this.dropalternative = $mgt('<div class="redactor_dropalternative">' + this.opts.atext + '</div>');
-        
+
         this.droparea.append(this.dropareabox);
-        
+
         this.$mgtel.before(this.droparea);
         this.$mgtel.before(this.dropalternative);
 
         // drag over
         this.dropareabox.bind('dragover', $mgt.proxy(function() { return this.ondrag(); }, this));
-        
+
         // drag leave
         this.dropareabox.bind('dragleave', $mgt.proxy(function() { return this.ondragleave(); }, this));
-    
-        var uploadProgress = $mgt.proxy(function(e) 
-        { 
+
+        var uploadProgress = $mgt.proxy(function(e)
+        {
           var percent = parseInt(e.loaded / e.total * 100, 10);
           this.dropareabox.text('Loading ' + percent + '%');
-          
+
         }, this);
-    
+
         var xhr = jQuery.ajaxSettings.xhr();
-        
+
         if (xhr.upload)
         {
           xhr.upload.addEventListener('progress', uploadProgress, false);
         }
-        
+
         var provider = function () { return xhr; };
-    
+
         // drop
         this.dropareabox.get(0).ondrop = $mgt.proxy(function(event)
         {
           event.preventDefault();
-          
+
           this.dropareabox.removeClass('hover').addClass('drop');
-          
+
           var file = event.dataTransfer.files[0];
           var fd = new FormData();
 
@@ -3171,20 +3169,20 @@ $mgt.fn.execCommand = function(cmd, param)
           if (this.opts.uploadFields !== false && typeof this.opts.uploadFields === 'object')
           {
             $mgt.each(this.opts.uploadFields, $mgt.proxy(function(k,v)
-            {          
+            {
               if (v.indexOf('#') === 0)
               {
                 v = $mgt(v).val();
               }
-              
+
               fd.append(k, v);
-          
+
             }, this));
-          }  
-          
+          }
+
           // append file data
           fd.append('file', file);
-          
+
 
           $mgt.ajax({
             dataType: 'html',
@@ -3201,12 +3199,12 @@ $mgt.fn.execCommand = function(cmd, param)
               {
                 this.opts.success(data);
               }
-              
+
               if (this.opts.preview === true)
               {
                 this.dropareabox.html(data);
               }
-              
+
             }, this)
           });
 
@@ -3236,14 +3234,14 @@ $mgt.fn.execCommand = function(cmd, param)
     var url1 = /(^|&lt;|\s)(www\..+?\..+?)(\s|&gt;|$)/g,
     url2 = /(^|&lt;|\s)(((https?|ftp):\/\/|mailto:).+?)(\s|&gt;|$)/g,
 
-        linkifyThis = function () 
+        linkifyThis = function ()
         {
             var childNodes = this.childNodes,
             i = childNodes.length;
             while(i--)
             {
                 var n = childNodes[i];
-                if (n.nodeType === 3) 
+                if (n.nodeType === 3)
                 {
                     var html = n.nodeValue;
                     if (html)
@@ -3263,7 +3261,7 @@ $mgt.fn.execCommand = function(cmd, param)
                 }
             }
         };
-    
+
     $.fn.linkify = function ()
     {
         this.each(linkifyThis);
@@ -3279,6 +3277,6 @@ $mgt.fn.execCommand = function(cmd, param)
  * version: 0.9
  * author: Josef Moravec, josef.moravec@gmail.com
  * updated: Imperavi Inc.
- * 
+ *
  */
 (function($mgt){$mgt.event.special.textselect={setup:function(data,namespaces){$mgt(this).data("textselected",false);$mgt(this).data("ttt",data);$mgt(this).bind('mouseup',$mgt.event.special.textselect.handler)},teardown:function(data){$mgt(this).unbind('mouseup',$mgt.event.special.textselect.handler)},handler:function(event){var data=$mgt(this).data("ttt");var text=$mgt.event.special.textselect.getSelectedText(data).toString();if(text!=''){$mgt(this).data("textselected",true);event.type="textselect";event.text=text;$mgt.event.handle.apply(this,arguments)}},getSelectedText:function(data){var text='';if(window.getSelection)text=window.getSelection();else if(document.getSelection) text=document.getSelection();else if(document.selection)text=document.selection.createRange().text;return text}};$mgt.event.special.textunselect={setup:function(data,namespaces){$mgt(this).data("rttt",data);$mgt(this).data("textselected",false);$mgt(this).bind('mouseup',$mgt.event.special.textunselect.handler);$mgt(this).bind('keyup',$mgt.event.special.textunselect.handlerKey)},teardown:function(data){$mgt(this).unbind('mouseup',$mgt.event.special.textunselect.handler)},handler:function(event){if($mgt(this).data("textselected")){var data=$mgt(this).data("rttt");var text=$mgt.event.special.textselect.getSelectedText(data).toString();if(text==''){$mgt(this).data("textselected",false);event.type="textunselect";$mgt.event.handle.apply(this,arguments)}}},handlerKey:function(event){if($mgt(this).data("textselected")){var data=$mgt(this).data("rttt");var text=$mgt.event.special.textselect.getSelectedText(data).toString();if((event.keyCode=27)&&(text=='')){$mgt(this).data("textselected",false);event.type="textunselect";$mgt.event.handle.apply(this,arguments)}}}}})(jQuery);
